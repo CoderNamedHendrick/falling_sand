@@ -48,53 +48,31 @@ class _FallingSandState extends State<FallingSand> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: LayoutBuilder(builder: (context, constraints) {
-            size = Size(constraints.maxWidth, constraints.maxHeight);
-            return RepaintBoundary(
-              child: ValueListenableBuilder(
-                valueListenable: gridNotifier ?? ValueNotifier(_kNullValue),
-                builder: (context, grid, child) {
-                  return Listener(
-                    onPointerDown: _onGestureUpdate,
-                    onPointerMove: _onGestureUpdate,
-                    child: CustomPaint(
-                      painter: GridPainter(
-                        gridNotifier:
-                            gridNotifier ?? ValueNotifier(_kNullValue),
-                        cellSize: cellSize,
-                        grid: grid,
-                      ),
-                      size: Size(
-                        size.width, // accounting for left and right
-                        size.height, // accounting for top and bottom
-                      ),
-                    ),
-                  );
-                },
+    return LayoutBuilder(builder: (context, constraints) {
+      size = Size(constraints.maxWidth, constraints.maxHeight);
+      return RepaintBoundary(
+        child: ValueListenableBuilder(
+          valueListenable: gridNotifier ?? ValueNotifier(_kNullValue),
+          builder: (context, grid, child) {
+            return Listener(
+              onPointerDown: _onGestureUpdate,
+              onPointerMove: _onGestureUpdate,
+              child: CustomPaint(
+                painter: GridPainter(
+                  gridNotifier: gridNotifier ?? ValueNotifier(_kNullValue),
+                  cellSize: cellSize,
+                  grid: grid,
+                ),
+                size: Size(
+                  size.width, // accounting for left and right
+                  size.height, // accounting for top and bottom
+                ),
               ),
             );
-          }),
-        ),
-        const SizedBox(height: 20),
-        Slider(
-          value: cellSize,
-          min: 8,
-          max: 40,
-          label: cellSize.toString(),
-          divisions: 32,
-          onChanged: (value) {
-            setState(() {
-              cellSize = value;
-            });
-
-            _rebuildGrid();
           },
         ),
-      ],
-    );
+      );
+    });
   }
 
   // generate a splurge of particles when we detect tap/drag events
