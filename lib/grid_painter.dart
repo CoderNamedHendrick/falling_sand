@@ -74,19 +74,14 @@ class GridPainter extends CustomPainter {
           final yOrigin = 0 + (size.height ~/ grid.rows * i).toDouble();
           final xOrigin = 0 + (size.width ~/ grid.columns * j).toDouble();
           final center = cellSize / 2;
-          Path path = Path()
-            ..moveTo(xOrigin, yOrigin)
-            ..addRect(
-              Rect.fromCenter(
-                center: Offset(xOrigin + center, yOrigin + center),
-                width: cellSize,
-                height: cellSize,
-              ),
-            );
 
           final hue = HSLColor.fromAHSL(1, state.toDouble(), 1, 0.5);
-          canvas.drawPath(
-            path,
+          canvas.drawRect(
+            Rect.fromCenter(
+              center: Offset(xOrigin + center, yOrigin + center),
+              width: cellSize,
+              height: cellSize,
+            ),
             Paint()
               ..color = hue.toColor()
               ..style = PaintingStyle.fill,
