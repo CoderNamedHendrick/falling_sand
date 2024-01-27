@@ -1,5 +1,7 @@
 import 'package:falling_sand/falling_sand.dart';
+import 'package:falling_sand/grid_sketch.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_processing/flutter_processing.dart';
 
 const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
 
@@ -12,11 +14,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: darkBlue,
-        body: FallingSand(),
+        body: Processing(
+          sketch: FallingSandSketch(MediaQuery.sizeOf(context)),
+        ),
+        // body: FallingSand(),
       ),
     );
   }
